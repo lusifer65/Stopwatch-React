@@ -35,7 +35,6 @@ body{
   
   .display{
     text-align: center;
-    margin-top: 10px;
     border: 3px double black;
     width: 200px;
     margin: 20px auto;
@@ -47,6 +46,7 @@ body{
   }
   .digit{
     display: inline-block;
+    transition: span 1s;
     cursor: auto;
   }
   

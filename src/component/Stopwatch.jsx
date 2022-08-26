@@ -17,6 +17,7 @@ const Stopwatch = () => {
     updateS = time.ss,
     updateMS = time.ms;
   const run = () => {
+    updateMS++;
     if (updateM === 60) {
       updateH++;
       updateM = 0;
@@ -29,7 +30,7 @@ const Stopwatch = () => {
       updateS++;
       updateMS = 0;
     }
-    updateMS++;
+    
     setTime({ hh: updateH, mm: updateM, ss: updateS, ms: updateMS });
   };
 
