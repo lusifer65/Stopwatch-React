@@ -14,7 +14,7 @@ body{
     border: none;
     background-color: white;
     cursor: pointer;
-    width: 94px;
+    width: 90px;
   }
   
   .Btn:hover{
@@ -46,14 +46,13 @@ body{
   }
   .digit{
     display: inline-block;
-    transition: span 1s;
     cursor: auto;
   }
   
   .btnGroup{
     position: relative;
       bottom: -200px;
-      width: 250px;
+      width: 400px;
       left: 0px;
       margin: auto auto;
       

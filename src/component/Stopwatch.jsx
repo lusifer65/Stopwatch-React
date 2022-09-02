@@ -1,67 +1,42 @@
-import React, { useState } from "react";
-import Btn from "./Btn";
-import Timer from "./Timer";
+import React, { useState, useEffect } from "react";
 import "./Style.css";
 
 const Stopwatch = () => {
-  const [time, setTime] = useState({
-    hh: 0,
-    mm: 0,
-    ss: 0,
-    ms: 0,
-  });
-  const [btn, setBtn] = useState("Start");
-  const [id, setId] = useState(null);
-  var updateH = time.hh,
-    updateM = time.mm,
-    updateS = time.ss,
-    updateMS = time.ms;
-  const run = () => {
-    updateMS++;
-    if (updateM === 60) {
-      updateH++;
-      updateM = 0;
+  const [time, setTime] = useState(0);
+  const [running, setRunning] = useState(false);
+  useEffect(() => {
+    let interval;
+    if (running) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    } else if (!running) {
+      clearInterval(interval);
     }
-    if (updateS === 60) {
-      updateM++;
-      updateS = 0;
-    }
-    if (updateMS === 100) {
-      updateS++;
-      updateMS = 0;
-    }
-    
-    setTime({ hh: updateH, mm: updateM, ss: updateS, ms: updateMS });
-  };
-
-  const start = () => {
-    if (btn === "Start") {
-      setBtn("Resume");
-      run();
-      setId(setInterval(run, 10));
-    } else {
-      clearInterval(id);
-      setId(null);
-      setBtn("Start");
-    }
-  };
-
-  const reset = () => {
-    setTime({ hh: 0, mm: 0, ss: 0, ms: 0 });
-    clearInterval(id);
-    setId(null);
-    setBtn("Start");
-  };
-
+    return () => clearInterval(interval);
+  }, [running]);
   return (
     <>
       <h1>Stopwatch</h1>
       <div className="mainBox">
-        <Timer time={time} />
-        <Btn text={btn} start={start} reset={reset} />
+        <div className="display">
+          <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
+          <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
+          <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
+        </div>
+        <div className="btnGroup">
+          <button className="Btn" onClick={() => setRunning(true)}>
+            Start
+          </button>
+          <button className="Btn reset" onClick={() => setRunning(false)}>
+            Stop
+          </button>
+          <button className="Btn reset" onClick={() => setTime(0)}>
+            Reset
+          </button>
+        </div>
       </div>
     </>
   );
 };
-
 export default Stopwatch;
